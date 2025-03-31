@@ -5,7 +5,7 @@
 
 ### Experiment
 Hypothesis: Safari or MacOS automatically stops earbuds or headphones if no sound is being played, so the static sound could be electricity disconnecting from the earbuds or headphones    
-Prediction: playing silent audio (yep) for an hour will stop the annoying sound
+Prediction: playing silent audio (yep) for an hour will stop the annoying sound     
 Experiment: this rabbit hole led to this project    
 
 ### Installation
