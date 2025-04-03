@@ -18,6 +18,13 @@
 7. Post any issues with the code if there are any in github issues
 8. Enjoy the peace from the annoying crackling and popping sounds :D
 
+### Running after installation
+1. Open the hammerspoon app :D
+
+### Commands
+1. CMD + SHIFT + 9 to quit script and hammerspoon
+2. [wip, not ready yet] CMD + SHIFT + 8 to skip tutorial 
+
 ### Random notes
 1. If I have time, I want to learn how to make this into an app to make it easier to use.
 2. Lua is strangely similar to Javascript and I found it super fun (PKCTD Psychology negative reinforcement >:D )
