@@ -23,7 +23,7 @@ Guess what? This script may help stop the annoying sounds your headphones or ear
 8. Enjoy the peace from the annoying crackling and popping sounds :D
 
 ### Running after installation
-1. Open the hammerspoon app :D
+1. Open the hammerspoon app **before** you first play audio to prevent popping!
 
 ### Commands
 1. CMD + SHIFT + 9 to quit script and hammerspoon
@@ -32,3 +32,7 @@ Guess what? This script may help stop the annoying sounds your headphones or ear
 ### Random notes
 1. If I have time, I want to learn how to make this into an app to make it easier to use.
 2. Lua is strangely similar to Javascript and I found it super fun (PKCTD Psychology negative reinforcement >:D )
+
+--- 
+### Rules
+1. no 
