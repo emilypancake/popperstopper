@@ -32,7 +32,4 @@ Guess what? This script may help stop the annoying sounds your headphones or ear
 ### Random notes
 1. If I have time, I want to learn how to make this into an app to make it easier to use.
 2. Lua is strangely similar to Javascript and I found it super fun (PKCTD Psychology negative reinforcement >:D )
-
---- 
-### Rules
-1. no 
+3. This code has been AI assisted! 
