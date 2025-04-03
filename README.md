@@ -1,10 +1,13 @@
 # Anti Pop/Crackle Script
-### Welcome! Do you have the following issues?
-1. Earbuds or headphones make a crackling, popping, or static sound when starting to play anything with audio: video with audio, music
-2. Earbuds or headphones make a crackling, popping, or static sound after not playing audio for a few seconds
-Guess what? This script may help stop the annoying sounds your headphones or earbuds may make! 🎉
+Welcome traveler! Your arduous journey has led you here.
 
-### Experiment
+### Do you have the following issues?
+1. Your earbuds or headphones make a **crackling, popping, or static sound** when **starting to play anything with audio**: video with audio, music
+2. Your earbuds or headphones make a **crackling, popping, or static sound** after **not playing audio** for a few seconds
+     
+Guess what? This script may help stop the annoying sounds your headphones or earbuds may make! 🎉 If you're interested, let's dive into my thinking process, or hop over to **Installation** to get started.
+     
+### Our Experiment
 **Hypothesis**: Safari or MacOS automatically stops earbuds or headphones if no sound is being played, so the static sound could be electricity disconnecting from the earbuds or headphones    
 **Prediction**: playing silent audio (yep) for an hour will stop the annoying sound     
 **Experiment**: this rabbit hole led to this project (and also because I searched all over and couldn't find a script, app, or code that offered to stop this annoying popping sound, so hooray!)     
