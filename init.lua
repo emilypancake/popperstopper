@@ -1,37 +1,47 @@
+skip = false
 hs.notify.withdrawAll()
 hs.execute("pkill afplay")
 debugMode = false
 
 function tutorial()
     hs.hotkey.bind({"cmd", "shift"}, "8", function()
-        return
+        skip = true
     end)
-    hs.alert.show("🎁 Hooray! Welcome to emilypancake's first big project on GitHub!")
-    hs.alert.show("CMD + SHIFT + 8 to skip tutorial. Do not skip if new!")
+    
+    title = {
+        "🎁 Hooray!",
+        "⚠️ Do not skip tutorial if you just started!",
+        "⚠️ If you have Do not Disturb enabled",
+        "To quit the script",
+        "To restart the script",
+        "For setup"
+    }
+    message = {
+        "Welcome to emilypancake's first big project on GitHub!",
+        "CMD + SHIFT + 8 to skip tutorial.",
+        "Do not Disturb disables notifications. Without notifications, errors or debug mode won't work. However the script will still prevent popping without notification access. Notifications help you better understand the code.",
+        "Press CMD + SHIFT + 9 to quit script.",
+        "Quit and reopen the Hammerspoon app to restart.",
+        "Visit popperstopper Github repository for instructions!"
+    }
+    timeSkip = 0
 
-    hs.timer.doAfter(2.1, function()
-        hs.alert.show("⚠️ If you have Do not Disturb enabled then") 
-    end)
-
-    hs.timer.doAfter(4.2, function()
-        hs.alert.show("⚠️ without notifications, errors or debug mode won't work")
-    end)
-
-    hs.timer.doAfter(6.3, function()
-        hs.alert.show("✅ The script will still work without notifications")
-    end)
-
-    hs.timer.doAfter(8.4, function()
-        hs.alert.show("Press CMD + SHIFT + 9 to quit script.")
-    end)
-
-    hs.timer.doAfter(10.5, function()
-        hs.alert.show("Open Hammerspoon to start.")
-    end)
-
-    hs.timer.doAfter(12.6, function()
-        hs.alert.show("For setup, visit popperstopper Github repository.")
-    end)
+    hs.dialog.blockAlert(title[1], message[1], "OK") -- yep loops exist but for some reason for loops don't stop the pausing mechanism
+    if not skip then -- yep because blockAlert doesn't pause with loops then manually it is
+        hs.dialog.blockAlert(title[2], message[2], "OK")
+    end
+    if not skip then
+        hs.dialog.blockAlert(title[3], message[3], "OK")
+    end
+    if not skip then
+        hs.dialog.blockAlert(title[4], message[4], "OK")
+    end
+    if not skip then
+        hs.dialog.blockAlert(title[5], message[5], "OK")
+    end
+    if not skip then
+        hs.dialog.blockAlert(title[6], message[6], "OK")
+    end
 end
 tutorial()
 debugMode = hs.dialog.blockAlert("Do you want to enable debug mode?", "If Yes, you will get notifications for every successful step and error. \n \n If No [recommended], you'll only get notifications for errors.", "Yes", "No") == "Yes"
@@ -112,7 +122,11 @@ end
 
 function checkAndPlaySilentAudio()
     if debugMode then
-        hs.alert.show(audioDevice:name());
+        hs.notify.new({
+            title = "Device Name:",
+            informativeText = audioDevice:name(),
+            withdrawAfter = 0
+        }):send()
     end
     if string.match(string.lower(audioDevice:name()), "headphones") then 
         if hs.execute("pgrep afplay") == "" then 
