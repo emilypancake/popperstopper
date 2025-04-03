@@ -1,39 +1,40 @@
-done = false
 hs.notify.withdrawAll()
 hs.execute("pkill afplay")
+debugMode = false
 
+function tutorial()
+    hs.hotkey.bind({"cmd", "shift"}, "8", function()
+        return
+    end)
+    hs.alert.show("🎁 Hooray! Welcome to emilypancake's first big project on GitHub!")
+    hs.alert.show("CMD + SHIFT + 8 to skip tutorial. Do not skip if new!")
 
-hs.alert.show("🎁 Hooray! Welcome to emilypancake's first big project on GitHub!")
+    hs.timer.doAfter(2.1, function()
+        hs.alert.show("⚠️ If you have Do not Disturb enabled then") 
+    end)
 
+    hs.timer.doAfter(4.2, function()
+        hs.alert.show("⚠️ without notifications, errors or debug mode won't work")
+    end)
 
-hs.timer.doAfter(2.1, function()
-    hs.alert.show("⚠️ If you have Do not Disturb enabled then") 
-end)
+    hs.timer.doAfter(6.3, function()
+        hs.alert.show("✅ The script will still work without notifications")
+    end)
 
-hs.timer.doAfter(4.2, function()
-    hs.alert.show("⚠️ without notifications, errors or debug mode won't work")
-end)
+    hs.timer.doAfter(8.4, function()
+        hs.alert.show("Press CMD + SHIFT + 9 to quit script.")
+    end)
 
-hs.timer.doAfter(6.3, function()
-    hs.alert.show("✅ The script will still work without notifications")
-end)
+    hs.timer.doAfter(10.5, function()
+        hs.alert.show("Open Hammerspoon to start.")
+    end)
 
-hs.timer.doAfter(8.4, function()
-    hs.alert.show("Press CMD + SHIFT + 9 to quit script.")
-end)
-
-hs.timer.doAfter(10.5, function()
-    hs.alert.show("Open Hammerspoon to start.")
-end)
-
-hs.timer.doAfter(12.6, function()
-    hs.alert.show("For setup, visit popperstopper Github repository.")
-end)
-
-debugMode = hs.dialog.blockAlert("Do you want to enable debug mode?", "If Yes, you will get notifications for every successful step and error. \n \n If No [recommended], you'll only get notifications for errors.", "Yes", "No")
-
-
-
+    hs.timer.doAfter(12.6, function()
+        hs.alert.show("For setup, visit popperstopper Github repository.")
+    end)
+end
+tutorial()
+debugMode = hs.dialog.blockAlert("Do you want to enable debug mode?", "If Yes, you will get notifications for every successful step and error. \n \n If No [recommended], you'll only get notifications for errors.", "Yes", "No") == "Yes"
 
 
 hs.hotkey.bind({"cmd", "shift"}, "9", function()
@@ -43,7 +44,6 @@ hs.hotkey.bind({"cmd", "shift"}, "9", function()
     end
 end)
 
-
 local audioDevice = hs.audiodevice.defaultOutputDevice()
 
 -- create folder for silent audio if doesn't exist, accesses it if it does exist
@@ -52,15 +52,17 @@ local folderExists = hs.fs.attributes(folderPath)
 if not folderExists then
     local newFolder = hs.fs.mkdir(folderPath)
     if not newFolder then
-        notify = hs.notify.new({
-            title="⚠️ Error creating folder", 
-            informativeText="Do I have permission, like full disk access?", 
-            withdrawAfter = 0
-        }):send()
-        error("Attempted to create new folder but failed. Do I have permission to access files, like full disk access?")
+        hs.dialog.blockAlert(
+        "⚠️ Error creating folder",
+        "Failed to create new folder at\n" .. folderPath .. "\n\nDo I have permission to access files, like full disk access?\n\n Please restart the script afterwards!",
+        "OK"
+        )
+        hs.timer.doAfter(3, function()
+            error("Error creating folder.")
+        end)
     else
         hs.alert.show("Mode" .. debugMode)
-        if debugMode == "Yes" then
+        if debugMode then
             hs.notify.new({
                 title = "✅  Created folder at",
                 informativeText = folderPath,
@@ -69,7 +71,7 @@ if not folderExists then
         end
     end
 else
-   if debugMode == "Yes" then
+   if debugMode then
         hs.notify.new({
             title = "✅  Accessed folder at",
             informativeText = folderPath,
@@ -85,16 +87,12 @@ if not hs.fs.attributes(audioFilePath) then
     local fileUrl = "https://github.com/emilypancake/popperstopper/raw/refs/heads/main/silent.mp3"  -- Replace this with the actual raw URL
     hs.execute("curl -L " .. fileUrl .. " -o " .. audioFilePath)
     if not hs.fs.attributes(audioFilePath) then
-        hs.notify.new({
-            title = "⚠️ Error finding URL",
-            informativeText = "Did Emily's url not work? Do you have internet access? Is your firewall blocking Github or Curl?",
-            withdrawAfter = 0
-        }):send()
+        hs.dialog.blockAlert("⚠️ Error finding URL", "Did Emily's url not work?\nDo you have internet access? \nIs your firewall blocking Github or Curl?", "OK")
         hs.timer.doAfter(3, function()
-            error("Error finding URL. Did Emily's url not work? Do you have internet access? Is your firewall blocking Github or Curl?")
+            error("Error finding URL.")
         end)
     else 
-        if debugMode == "Yes" then
+        if debugMode then
             hs.notify.new({
                 title = "✅  Created silent file at",
                 informativeText = audioFilePath,
@@ -103,7 +101,7 @@ if not hs.fs.attributes(audioFilePath) then
         end
     end
 else
-    if debugMode == "Yes" then
+    if debugMode then
         hs.notify.new({
             title = "✅  Accessed silent file at", 
             informativeText = audioFilePath, 
@@ -113,13 +111,12 @@ else
 end
 
 function checkAndPlaySilentAudio()
-    if debugMode == "Yes" then
+    if debugMode then
         hs.alert.show(audioDevice:name());
     end
-    if string.match(string.lower(audioDevice:name()), "headphones") then  -- this only works if your audio device name contains headphones
-        output = hs.execute("pgrep afplay") -- finds audio
-        if output == "" or output == nil then 
-            if debugMode == "Yes" then
+    if string.match(string.lower(audioDevice:name()), "headphones") then 
+        if hs.execute("pgrep afplay") == "" then 
+            if debugMode then
                 hs.notify.new({
                     title = "✅  Noticed audio is silent",
                     informativeText = "Attempting to enable anti pop!",
@@ -127,12 +124,8 @@ function checkAndPlaySilentAudio()
                 }):send()
             end
             hs.task.new("/usr/bin/afplay", function(exitCode, standardOutput, standardError)
-                hs.notify.new({
-                    title = "⚠️ afplay issue",
-                    informativeText = "Exit Code: ".. exitCode.. ", Out: ".. standardOutput .. "ErrorOut: " .. standardError,
-                    withdrawAfter = 0
-                }):send()
-                
+                hs.dialog.blockAlert("⚠️ afplay issue", "Exit Code: ".. exitCode.. "\nOut: ".. standardOutput .. "\nErrorOut: " .. standardError, "OK")
+                error("afplay issue") 
             end , {audioFilePath}):start()
         end
     else
