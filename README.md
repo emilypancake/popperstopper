@@ -27,7 +27,7 @@ Guess what? This script may help stop the annoying sounds your headphones or ear
 
 ### Commands
 1. CMD + SHIFT + 9 to quit script and hammerspoon
-2. [wip, not ready yet] CMD + SHIFT + 8 to skip tutorial 
+2. CMD + SHIFT + 8 to skip tutorial 
 
 ### Random notes
 1. If I have time, I want to learn how to make this into an app to make it easier to use.
