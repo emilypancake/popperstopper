@@ -20,7 +20,7 @@ function tutorial()
         "Welcome to emilypancake's first big project on GitHub!",
         "CMD + SHIFT + 8 to skip tutorial.",
         "Do not Disturb disables notifications. Without notifications, errors or debug mode won't work. However the script will still prevent popping without notification access. Notifications help you better understand the code.",
-        "Press CMD + SHIFT + 9 to quit script.",
+        "Press CMD + SHIFT + 9 to quit script at any time.",
         "Quit and reopen the Hammerspoon app to restart.",
         "Visit popperstopper Github repository for instructions!"
     }
@@ -138,8 +138,12 @@ function checkAndPlaySilentAudio()
                 }):send()
             end
             hs.task.new("/usr/bin/afplay", function(exitCode, standardOutput, standardError)
-                hs.dialog.blockAlert("⚠️ afplay issue", "Exit Code: ".. exitCode.. "\nOut: ".. standardOutput .. "\nErrorOut: " .. standardError, "OK")
-                error("afplay issue") 
+                if exitCode ~= 0 then
+                    hs.dialog.blockAlert("⚠️ afplay issue", "Exit Code: ".. exitCode.. "\nOut: ".. standardOutput .. "\nErrorOut: " .. standardError, "OK")
+                    error("afplay issue") 
+                end     
+                
+                
             end , {audioFilePath}):start()
         end
     else
