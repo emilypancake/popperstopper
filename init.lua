@@ -3,6 +3,8 @@ hs.notify.withdrawAll()
 hs.execute("pkill afplay")
 debugMode = false
 
+
+
 function tutorial()
     hs.hotkey.bind({"cmd", "shift"}, "8", function()
         skip = true
@@ -43,7 +45,7 @@ function tutorial()
         hs.dialog.blockAlert(title[6], message[6], "OK")
     end
 end
-tutorial()
+-- tutorial() -- so it's not so annoying
 debugMode = hs.dialog.blockAlert("Do you want to enable debug mode?", "If Yes, you will get notifications for every successful step and error. \n \n If No [recommended], you'll only get notifications for errors.", "Yes", "No") == "Yes"
 
 
@@ -153,7 +155,7 @@ end
 
 
 checkAndPlaySilentAudio() 
-hs.timer.doEvery(3600, function()
+hs.timer.doEvery(3601, function()
     checkAndPlaySilentAudio() 
 end)
 
